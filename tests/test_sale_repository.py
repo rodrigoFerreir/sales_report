@@ -1,8 +1,8 @@
 import pytest
 from datetime import date
 from core.models.sale import Sale
-from core.repository import SalesRepository
 from src.parser.csv_read import CsvReaderAdapter
+from core.repository.sale_repository import SalesRepository
 
 
 @pytest.fixture

@@ -4,7 +4,7 @@ from datetime import date
 
 from core.models.sale import Sale
 from core.models.report import Report
-from core.services import SalesReportService
+from core.services.report_service import SalesReportService
 
 
 @pytest.fixture
