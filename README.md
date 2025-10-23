@@ -17,7 +17,7 @@ Uma ferramenta de linha de comando em Python para processar arquivos CSV de vend
 
     ```bash
     git clone https://github.com/rodrigoFerreir/sales_report
-    cd vendas-cli
+    cd sales_report
     ```
 
 2.  **Crie e ative um ambiente virtual (recomendado):**
