@@ -1,6 +1,6 @@
 # Vendas CLI
 
-Uma ferramenta de linha de comando em Python para processar arquivos CSV de vendas e gerar relatórios ricos, com foco em qualidade de código, testes e boas práticas.
+Uma ferramenta de linha de comando em Python para processar arquivos CSV de vendas e gerar relatórios.
 
 ## Funcionalidades
 
@@ -16,7 +16,7 @@ Uma ferramenta de linha de comando em Python para processar arquivos CSV de vend
 1.  **Clone o repositório:**
 
     ```bash
-    git clone <URL_DO_SEU_REPOSITORIO>
+    git clone https://github.com/rodrigoFerreir/sales_report
     cd vendas-cli
     ```
 
@@ -63,18 +63,6 @@ Mouse,160.00,2,2025-10-23
 
     ```bash
     vendas-cli data/vendas.csv --format json
-    ```
-
--   **Relatório filtrado por data de início (ex: a partir de 2025-10-22):**
-
-    ```bash
-    vendas-cli data/vendas.csv --start-date 2025-10-22
-    ```
-
--   **Relatório filtrado por data de fim (ex: até 2025-10-21):**
-
-    ```bash
-    vendas-cli data/vendas.csv --end-date 2025-10-21
     ```
 
 -   **Relatório filtrado por intervalo de datas (ex: entre 2025-10-21 e 2025-10-22):**
