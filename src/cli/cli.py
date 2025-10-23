@@ -5,11 +5,17 @@ from datetime import datetime
 from typing import Dict
 from utils.cli_message import help_text_cli
 from parser.csv_read import CsvReaderAdapter
-from output.json_formater import JsonFormater
-from output.text_formater import TextFormater
-from output.formater_contract import IFormater
+
+from output.formatters.json_formater import JsonFormater
+from output.formatters.text_formater import TextFormater
+from output.writers.writer_contract import IWriter
+from output.writers.text_writer import TextWriter
+from output.writers.json_writer import JsonWriter
+from output.formatters.formater_contract import IFormater
+
 from core.repository.sale_repository import SalesRepository
 from core.services.report_service import SalesReportService
+
 
 # Configuração básica de logging
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -53,8 +59,13 @@ def main():
     service = SalesReportService()
 
     formatters: Dict[str, IFormater] = {
-        "json": JsonFormater,
-        "text": TextFormater,
+        "json": JsonFormater(),
+        "text": TextFormater(),
+    }
+
+    writers: Dict[str, IWriter] = {
+        "json": JsonWriter(),
+        "text": TextWriter(),
     }
 
     try:
@@ -70,9 +81,14 @@ def main():
         )
 
         formatter = formatters[args.format]
+        writer = writers[args.format]
+
         data = formatter.execute(report.to_dict())
+        result = writer.execute(data)
+
         print("RESULTADO DO RELATÓRIO")
         print(data)
+        print(result)
 
     except FileNotFoundError:
         logging.error(f"O arquivo não foi encontrado em: {absolute_filepath}")
