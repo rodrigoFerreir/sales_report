@@ -3,13 +3,13 @@ import logging
 from pathlib import Path
 from datetime import datetime
 from typing import Dict
-from src.output.formater_contract import IFormater
 from utils.cli_message import help_text_cli
-from core.repository import SalesRepository
-from core.services import SalesReportService
 from parser.csv_read import CsvReaderAdapter
 from output.json_formater import JsonFormater
 from output.text_formater import TextFormater
+from output.formater_contract import IFormater
+from core.repository.sale_repository import SalesRepository
+from core.services.report_service import SalesReportService
 
 # Configuração básica de logging
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")

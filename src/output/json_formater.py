@@ -1,7 +1,7 @@
 import json
 import logging
 from typing import Dict, Any
-from formater_contract import IFormater
+from output.formater_contract import IFormater
 
 logger = logging.getLogger(__name__)
 
