@@ -26,6 +26,7 @@ def service() -> SalesReportService:
 
 
 def test_generate_report_no_filter(service, sales_data):
+    """testa a geração de um relatorio sem filtro por data"""
     report = service.generate_report(sales_data)
     report_dict = report.to_dict()
 
@@ -52,6 +53,7 @@ def test_generate_report_no_filter(service, sales_data):
 
 
 def test_generate_report_with_date_range_filter(service, sales_data):
+    """testa se a filtragem esta correta"""
     start_date = date(2025, 10, 21)
     end_date = date(2025, 10, 22)
 
@@ -71,6 +73,7 @@ def test_generate_report_with_date_range_filter(service, sales_data):
 
 
 def test_generate_report_empty_sales(service):
+    """Testa no caso de dados vazios"""
     report = service.generate_report([])
     assert report.total_sales_processed == 0
     assert report.value_total_sales == 0.0
@@ -79,6 +82,7 @@ def test_generate_report_empty_sales(service):
 
 
 def test_find_best_selling_product_tie(service):
+    """Testa um cenário de empate"""
     tied_sales = [
         Sale("A", 10, 5, date(2025, 1, 1)),
         Sale("B", 10, 5, date(2025, 1, 1)),

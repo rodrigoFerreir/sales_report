@@ -1,8 +1,10 @@
 import argparse
 import logging
 from pathlib import Path
-from typing import Dict, Protocol
 from datetime import datetime
+from typing import Dict
+from src.output.formater_contract import IFormater
+from utils.cli_message import help_text_cli
 from core.repository import SalesRepository
 from core.services import SalesReportService
 from parser.csv_read import CsvReaderAdapter
@@ -16,26 +18,7 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 def main():
     parser = argparse.ArgumentParser(
         description="Ferramenta de linha de comando para processar e analisar dados de vendas a partir de arquivos CSV.",
-        epilog="""
-Exemplos de uso:
-  1. Gerar um relatório de vendas em formato de texto:
-     python -m src.cli.cli data/vendas.csv
-
-  2. Gerar um relatório de vendas em formato JSON:
-     python -m src.cli.cli data/vendas.csv --format json
-
-  3. Filtrar vendas por um período específico:
-     python -m src.cli.cli data/vendas.csv --start-date 2023-01-01 --end-date 2023-12-31
-
-Argumentos:
-  filepath      Caminho para o arquivo CSV de vendas.
-
-Opções:
-  --format      Formato de saída do relatório (text ou json). Padrão: text.
-  --start-date  Data de início para filtrar vendas (formato YYYY-MM-DD).
-  --end-date    Data de fim para filtrar vendas (formato YYYY-MM-DD).
-  --help        Mostra esta mensagem de ajuda e sai.
-""",
+        epilog=help_text_cli,
         formatter_class=argparse.RawTextHelpFormatter,
     )
     parser.add_argument(
@@ -69,7 +52,7 @@ Opções:
     repository = SalesRepository(CsvReaderAdapter())
     service = SalesReportService()
 
-    formatters = {
+    formatters: Dict[str, IFormater] = {
         "json": JsonFormater,
         "text": TextFormater,
     }

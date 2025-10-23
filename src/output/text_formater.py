@@ -1,10 +1,11 @@
-from typing import Dict, Any
 import logging
+from typing import Dict, Any
+from formater_contract import IFormater
 
 logger = logging.getLogger(__name__)
 
 
-class TextFormater:
+class TextFormater(IFormater):
 
     @staticmethod
     def execute(report_data: Dict[str, Any]) -> str:
@@ -38,3 +39,4 @@ class TextFormater:
             return "\n".join(output)
         except Exception as err:
             logger.error(f"Erro ao gerar relatorio no fomato txt {err}")
+            return ""
