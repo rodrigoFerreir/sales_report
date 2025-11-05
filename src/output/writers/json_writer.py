@@ -15,5 +15,5 @@ class JsonWriter(IWriter):
                 file.write(data)
             return f"Resultado salvo no path {self.path_result}"
         except Exception as err:
-            logger.error(f"Erro ao criar relatorio no formato json {err}")
+            logger.error(f"Erro ao escrever relatorio no formato json {err}")
             return ""

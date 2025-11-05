@@ -1,8 +1,9 @@
 import pytest
 from datetime import date
+from decimal import Decimal
 from core.models.sale import Sale
-from src.parser.csv_read import CsvReaderAdapter
-from core.repository.sale_repository import SalesRepository
+from core.parsers.csv_read import CsvReaderAdapter
+from core.repositories.sale_repository import SalesRepository
 
 
 @pytest.fixture
@@ -11,25 +12,25 @@ def repository_sales():
 
 
 def test_load_sales_success(repository_sales, sales_csv_file):
-    sales = repository_sales.load_sales(sales_csv_file)
+    sales = list(repository_sales.load_sales(sales_csv_file))
     assert len(sales) == 4
     assert isinstance(sales[0], Sale)
     assert sales[0].product == "ProdutoA"
-    assert sales[0].price == 10.50
+    assert sales[0].price == Decimal("10.50")
     assert sales[0].quantity == 2
 
     assert sales[1].product == "ProdutoB"
-    assert sales[1].price == 20.00
+    assert sales[1].price == Decimal("20.00")
     assert sales[1].quantity == 1
 
 
 def test_load_sales_file_not_found(repository_sales):
-    sales = repository_sales.load_sales("non_existent_file.csv")
+    sales = list(repository_sales.load_sales("non_existent_file.csv"))
     assert sales == []
 
 
 def test_load_sales_with_data(repository_sales, sales_csv_file_with_date):
-    sales = repository_sales.load_sales(sales_csv_file_with_date)
+    sales = list(repository_sales.load_sales(sales_csv_file_with_date))
     assert len(sales) == 6
     assert isinstance(sales[0], Sale)
     assert isinstance(sales[0].data, date)
@@ -37,15 +38,15 @@ def test_load_sales_with_data(repository_sales, sales_csv_file_with_date):
 
 
 def test_load_sales_malformed_data(repository_sales, malformed_test_sales):
-    sales = repository_sales.load_sales(malformed_test_sales)
+    sales = list(repository_sales.load_sales(malformed_test_sales))
     assert len(sales) == 0
 
 
 def test_load_sales_invalid_columns(repository_sales, invalid_columns_test_sales):
-    sales = repository_sales.load_sales(invalid_columns_test_sales)
+    sales = list(repository_sales.load_sales(invalid_columns_test_sales))
     assert len(sales) == 0
 
 
 def test_load_sales_empty_file(repository_sales, sales_empty_file):
-    sales = repository_sales.load_sales(sales_empty_file)
+    sales = list(repository_sales.load_sales(sales_empty_file))
     assert len(sales) == 0

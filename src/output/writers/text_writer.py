@@ -10,10 +10,13 @@ class TextWriter(IWriter):
 
     def execute(self, data: str) -> str:
         try:
+            if not data:
+                return f"Nenhum dado foi retornado na consulta."
+
             file_name = datetime.now().strftime("report_%Y%m%d%H%M%S.txt")
             with open(os.path.join(self.path_result, file_name), "w") as file:
                 file.writelines(data)
             return f"Resultado salvo no path {self.path_result}"
         except Exception as err:
-            logger.error(f"Erro ao criar relatorio no formato text {err}")
+            logger.error(f"Erro ao escrever o relatorio no formato text {err}")
             return ""

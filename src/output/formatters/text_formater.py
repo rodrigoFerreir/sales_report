@@ -31,11 +31,11 @@ class TextFormater(IFormater):
             output.append(f"| {total_sales_str:<38} |")
 
             if report_data["produto_mais_vendido"]:
-                product, quantity = report_data["produto_mais_vendido"]
-                best_seller_str = (
-                    f"Produto Mais Vendido: {product} ({quantity} unidades)"
-                )
-                output.append(f"| {best_seller_str:<38} |")
+                for product, quantity in report_data["produto_mais_vendido"]:
+                    best_seller_str = (
+                        f"Produto Mais Vendido: {product} ({quantity} unidades)"
+                    )
+                    output.append(f"| {best_seller_str:<38} |")
             else:
                 output.append("| Produto Mais Vendido: Nenhum           |")
 
@@ -45,5 +45,5 @@ class TextFormater(IFormater):
 
             return "\n".join(output)
         except Exception as err:
-            logger.error(f"Erro ao gerar relatorio no fomato txt {err}")
+            logger.error(f"Erro ao formatar dados do relatorio no fomato txt {err}")
             return ""
